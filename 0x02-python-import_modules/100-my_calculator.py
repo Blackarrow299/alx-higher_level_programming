@@ -24,7 +24,8 @@ if __name__ == "__main__":
             err = "Unknown operator. Available operators: +, -, * and /"
 
     if err is not None:
-        print("{}".format(err))
+        print("{}".format(err), end="")
         sys.exit(1)
     else:
-        print("{:d} {} {:d} = {:.0f}".format(a, operator, b, result))
+        print("{:d} {} {:d} = {:.0f}".format(a, operator, b, result), end="")
+        sys.exit(0)
