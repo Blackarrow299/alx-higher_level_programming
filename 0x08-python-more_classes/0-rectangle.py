@@ -1,4 +1,5 @@
 #!/usr/bin/python3
-""" rectangle class """
+""" module composed of rectangle class """
 class rectangle:
+    """ rectagle class """
     pass
