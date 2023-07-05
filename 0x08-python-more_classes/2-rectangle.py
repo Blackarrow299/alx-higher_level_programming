@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 
 """ module composed of rectangle class """
+
+
 class Rectangle:
     """ rectangle class """
+
     def __init__(self, width=0, height=0):
         self.width = width
         self.height = height
-   
+
     @property
     def width(self):
         return self.width
@@ -30,7 +33,6 @@ class Rectangle:
         elif value < 0:
             raise ValueError("hight must >= 0")
         self.height = value
-
 
     def area(self):
         """ return the area of the rectangle """
