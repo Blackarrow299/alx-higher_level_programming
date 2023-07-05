@@ -87,8 +87,9 @@ class Rectangle:
             str: string representation of rectangle
         """
         o = ""
-        for i in range(0, self.__height):
-            for j in range(0, self.__width):
+        for i in range(0, self.height):
+            for j in range(0, self.width):
                 o += '#'
-            o += '\n'
+            if i != self.height - 1:
+                o += '\n'
         return o
