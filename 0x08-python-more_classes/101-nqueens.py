@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 
-This module contains an algorithm that resolves the N-Queen puzzle
+This module composed from an algorithm that resolves the N-Queen puzzle
 using backtracking
 
 """
@@ -63,7 +63,7 @@ def Queen(m_queen, nqueen):
 
     m_queen[nqueen] = -1
 
-    while((m_queen[nqueen] < len(m_queen) - 1)):
+    while ((m_queen[nqueen] < len(m_queen) - 1)):
 
         m_queen[nqueen] += 1
 
