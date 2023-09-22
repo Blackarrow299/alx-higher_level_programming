@@ -92,3 +92,18 @@ class Base:
             instances.append(temp)
 
         return instances
+
+    @classmethod
+    def create(self, **dictionary):
+        """
+            returns an instance with all attributes already set.
+        """
+        from models.rectangle import Rectangle
+        from models.square import Square
+
+        if self.__name__ == "Rectangle":
+            mod = Rectangle(2, 7)
+        elif self.__name__ == "Square":
+            mod = Square(6)
+        mod.update(**dictionary)
+        return (mod)
