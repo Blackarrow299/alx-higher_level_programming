@@ -2,6 +2,7 @@
 """1-base.py"""
 
 
+import csv
 import json
 
 
@@ -107,3 +108,54 @@ class Base:
             mod = Square(6)
         mod.update(**dictionary)
         return (mod)
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """
+        Serializes a list of objects to CSV format and saves it in a file.
+
+        Args:
+            list_objs (list): A list of objects to be serialized and saved to a CSV file.
+
+        """
+        fname = cls.__name__ + ".csv"
+
+        if list_objs is None:
+            with open(fname, "w") as cfile:
+                cfile.write("[]")
+        else:
+            with open(fname, "w", newline='') as cfile:
+                writer = csv.writer(cfile)
+                for obj in list_objs:
+                    if cls.__name__ == "Rectangle":
+                        writer.writerow(
+                            [obj.id, obj.width, obj.height, obj.x, obj.y])
+                    if cls.__name__ == "Square":
+                        writer.writerow([obj.id, obj.width, obj.x, obj.y])
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """
+        Deserializes a list of objects from a CSV file.
+
+        Returns:
+            list: A list of instances.
+
+        """
+        fname = cls.__name__ + ".csv"
+
+        with open(fname, "r") as cfile:
+            if cls.__name__ == "Rectangle":
+                reader = csv.DictReader(cfile, fieldnames={'id', 'width',
+                                                           'height', 'x', 'y'})
+            elif cls.__name__ == "Square":
+                reader = csv.DictReader(
+                    cfile, fieldnames={'id', 'size', 'x', 'y'})
+
+            instances = []
+            for instance in reader:
+                instance = {x: int(y) for x, y in instance.items()}
+                temp = cls.create(**instance)
+                instances.append(temp)
+
+        return instances
