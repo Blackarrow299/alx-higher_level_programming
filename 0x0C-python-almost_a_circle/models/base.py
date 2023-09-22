@@ -132,3 +132,30 @@ class Base:
                             [obj.id, obj.width, obj.height, obj.x, obj.y])
                     if cls.__name__ == "Square":
                         writer.writerow([obj.id, obj.width, obj.x, obj.y])
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """
+        Deserializes a list of objects from a CSV file.
+
+        Returns:
+            list: A list of instances.
+
+        """
+        fname = cls.__name__ + ".csv"
+
+        with open(fname, "r") as cfile:
+            if cls.__name__ == "Rectangle":
+                reader = csv.DictReader(cfile, fieldnames={'id', 'width',
+                                                           'height', 'x', 'y'})
+            elif cls.__name__ == "Square":
+                reader = csv.DictReader(
+                    cfile, fieldnames={'id', 'size', 'x', 'y'})
+
+            instances = []
+            for instance in reader:
+                instance = {x: int(y) for x, y in instance.items()}
+                temp = cls.create(**instance)
+                instances.append(temp)
+
+        return instances
