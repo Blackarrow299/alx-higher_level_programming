@@ -50,7 +50,7 @@ class Base:
         return json.loads(json_string)
 
     @classmethod
-    def save_to_file(cls, list_objs):
+    def save_to_file(self, list_objs):
         """
         Writes the JSON string representation of list_objs to a file.
 
@@ -58,19 +58,17 @@ class Base:
             list_objs (list): A list of objects to be serialized and saved to a file.
 
         """
-        filename = cls.__name__ + ".json"
+        filename = self.__name__ + ".json"
         content = []
 
         if list_objs is not None:
-            for obj in list_objs:
-                obj_dict = obj.to_dictionary()
-                content.append(obj_dict)
+            content = [obj.to_dictionary() for obj in list_objs]
 
         with open(filename, "w", encoding='utf-8') as jfile:
-            json.dump(content, jfile)
+            jfile.write(self.to_json_string(content))
 
     @classmethod
-    def load_from_file(cls):
+    def load_from_file(self):
         """
         Loads a list of instances from a JSON file.
 
@@ -78,20 +76,19 @@ class Base:
             list: A list of instances.
 
         """
-        filename = cls.__name__ + ".json"
+        filename = self.__name__ + ".json"
 
         try:
             with open(filename, encoding='utf-8') as jfile:
-                content = json.load(jfile)
+                content = jfile.read()
         except FileNotFoundError:
-            return []
-        except json.JSONDecodeError:
-            return []
+            return []  # If the file doesn't exist
 
+        obj_dicts = self.from_json_string(content)
         instances = []
 
-        for obj_dict in content:
-            temp = cls.create(**obj_dict)
+        for obj_dict in obj_dicts:
+            temp = self.create(**obj_dict)
             instances.append(temp)
 
         return instances
